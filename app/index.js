@@ -4,7 +4,7 @@ import MainPage from "./components/MainPage.js";
 
 export default function App() {
     const loadNewMomentPage = () => {
-        router.replace("./Camera.js");
+        router.replace("components/Camera");
     };
 
     return (
