@@ -1,6 +1,6 @@
 import { StyleSheet, ScrollView } from "react-native";
 import Moment from "./Moment.js";
-import Icon from "../../assets/icon.png";
+import Icon from "../../../assets/icon.png";
 
 const GetMoments = () => {
     return [
