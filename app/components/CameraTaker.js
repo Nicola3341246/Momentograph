@@ -27,17 +27,14 @@ export default function CameraTaker() {
     const takePicture = async () => {
         const options = { quality: 0.5, base64: true };
         const photo = await cameraRef.current.takePictureAsync(options);
-        return photo;
+        const asset = await MediaLibrary.createAssetAsync(photo.uri);
+        return asset.uri;
     };
 
-    const savePicture = async (photo) => {
-        await AsyncStorage.setItem("current-photo", photo.uri);
-        await MediaLibrary.saveToLibraryAsync(photo.uri);
-    };
-
-    const createMoment = () => {
-        const photo = takePicture();
-        savePicture(photo);
+    const createMoment = async () => {
+        const photo = await takePicture();
+        await AsyncStorage.setItem("currentPicture", photo);
+        //console.log(await AsyncStorage.getItem("currentPicture"));
         router.push("/components/MomentForm");
     };
 

@@ -1,20 +1,68 @@
-import { StyleSheet, View, ScrollView, Text, TextInput, Image, Pressable } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+    StyleSheet,
+    View,
+    ScrollView,
+    Text,
+    TextInput,
+    Image,
+    Pressable,
+    AsyncStorage,
+} from "react-native";
+import { useState, useEffect } from "react";
 import { router } from "expo-router";
-import * as MediaLibrary from "expo-media-library";
+import Pic from "../../assets/icon.png";
 
 export default function MomentForm() {
-    const GetCurrentPicture = async () => {
-        console.log("test");
-        const photoUri = await AsyncStorage.getItem("current-photo");
-        const photo = await MediaLibrary.getAssetInfoAsync();
-        console.log(photo);
-        return photoUri;
+    const [weatherInfo, setWeatherInfo] = useState("");
+
+    const GetCurrentPicture = () => {
+        return Pic;
     };
+    const pic = GetCurrentPicture();
 
     const ReturnCamera = () => {
         router.replace("/components/CameraTaker");
     };
+
+    const ReturnToMainPage = () => {
+        router.replace("/");
+    };
+
+    const getWeather = async () => {
+        const apiKey = "Erstellen sie sich kostenlos einen API Key auf weatherapi.com";
+        const location = "Zürich";
+
+        let weather = "";
+
+        return (weather = await fetch(
+            `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&aqi=no`
+        )
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                weather =
+                    "Temperatur: " +
+                    data.current.temp_c +
+                    "°C Wind: " +
+                    data.current.wind_kph +
+                    "km/h";
+                console.log(weather);
+                return weather;
+            }));
+    };
+
+    useEffect(() => {
+        const fetchWeather = async () => {
+            try {
+                const weather = await getWeather();
+                setWeatherInfo(weather);
+            } catch (error) {
+                console.error("Error in fetchWeather:", error);
+            }
+        };
+
+        fetchWeather();
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -22,17 +70,18 @@ export default function MomentForm() {
                 <Pressable style={styles.button} onPress={ReturnCamera}>
                     <Text style={styles.text}>Nochmal</Text>
                 </Pressable>
-                <Pressable style={styles.button}>
+                <Pressable style={styles.button} onPress={ReturnToMainPage}>
                     <Text style={styles.text}>Abrechen</Text>
                 </Pressable>
             </View>
             <ScrollView style={styles.formContainer}>
                 <Text>Titel</Text>
                 <TextInput style={styles.input} placeholder="Titel" />
-                <Image style={styles.image} source={GetCurrentPicture} />
                 <Text>Beschreibung</Text>
                 <TextInput style={styles.input} />
-                <Pressable style={styles.button}>
+                <Image style={styles.image} source={GetCurrentPicture()} />
+                <Text>Wetter: {weatherInfo}</Text>
+                <Pressable style={styles.submitButton} onPress={ReturnToMainPage}>
                     <Text>Fertig</Text>
                 </Pressable>
             </ScrollView>
@@ -81,5 +130,16 @@ const styles = new StyleSheet.create({
     image: {
         width: "100%",
         height: 200,
+    },
+
+    submitButton: {
+        margin: 10,
+        padding: 10,
+        width: "80%",
+        borderRadius: 10,
+        elevation: 3,
+        alignSelf: "center",
+        backgroundColor: "#3884ff",
+        alignItems: "center",
     },
 });

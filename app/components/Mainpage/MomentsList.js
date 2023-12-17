@@ -11,6 +11,55 @@ const GetMoments = () => {
                 "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam",
             image: Icon,
         },
+        {
+            id: "1",
+            name: "Test2",
+            description:
+                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam",
+            image: Icon,
+        },
+        {
+            id: "1",
+            name: "Test3",
+            description:
+                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam",
+            image: Icon,
+        },
+        {
+            id: "1",
+            name: "Test4",
+            description:
+                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam",
+            image: Icon,
+        },
+        {
+            id: "1",
+            name: "Test1",
+            description:
+                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam",
+            image: Icon,
+        },
+        {
+            id: "1",
+            name: "Test1",
+            description:
+                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam",
+            image: Icon,
+        },
+        {
+            id: "1",
+            name: "Test1",
+            description:
+                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam",
+            image: Icon,
+        },
+        {
+            id: "1",
+            name: "Test1",
+            description:
+                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam",
+            image: Icon,
+        },
     ];
 };
 
@@ -29,6 +78,7 @@ const styles = new StyleSheet.create({
     container: {
         display: "flex",
         flexDirection: "column",
+        padding: "5%",
     },
 
     momentsContainer: {

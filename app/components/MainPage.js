@@ -1,11 +1,9 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
-import Header from "./Mainpage/Header.js";
 import MomentsLists from "./Mainpage/MomentsList.js";
 
 export default function MainPage({ loadNewMomentsPage }) {
     return (
         <View style={styles.container}>
-            <Header />
             <MomentsLists />
             <Pressable onPress={loadNewMomentsPage} style={styles.button}>
                 <Text>Neuer Moment</Text>
@@ -21,7 +19,13 @@ const styles = new StyleSheet.create({
     },
 
     button: {
+        margin: 10,
         padding: 10,
-        backgroundColor: "blue",
+        width: "80%",
+        borderRadius: 10,
+        elevation: 3,
+        alignSelf: "center",
+        backgroundColor: "#3884ff",
+        alignItems: "center",
     },
 });
