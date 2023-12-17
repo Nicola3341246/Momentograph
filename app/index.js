@@ -1,11 +1,10 @@
 import { router } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 import MainPage from "./components/MainPage.js";
-import CameraTaker from "./components/CameraTaker.js";
 
 export default function App() {
     const loadNewMomentPage = () => {
-        router.replace("./components/CameraTaker");
+        router.push("/components/CameraTaker");
     };
 
     return (

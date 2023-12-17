@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
-import Header from "./Header.js";
+import Header from "./Mainpage/Header.js";
 import MomentsLists from "./Mainpage/MomentsList.js";
 
 export default function MainPage({ loadNewMomentsPage }) {

@@ -1,12 +1,17 @@
 import { StyleSheet, View, Text, Pressable, Dimensions } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState } from "react";
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 import { Camera, CameraType } from "expo-camera";
-import Index from "../index.js";
+import * as MediaLibrary from "expo-media-library";
+import { useRef } from "react";
 
 export default function CameraTaker() {
+    const router = useRouter();
     const [type, setType] = useState(CameraType.back);
-    const [permission, requestPermission] = Camera.useCameraPermissions();
+    const [cameraPermission, requestCameraPermission] = Camera.useCameraPermissions();
+    const [mediaPermission, requestMediaPermission] = MediaLibrary.usePermissions();
+    const cameraRef = useRef(null);
 
     const width = Dimensions.get("window").width;
     const height = Math.round((width * 4) / 3);
@@ -16,11 +21,24 @@ export default function CameraTaker() {
     };
 
     const goBack = () => {
-        router.replace(Index);
+        router.back();
     };
 
-    const shootPhoto = () => {
-        alert("Photo");
+    const takePicture = async () => {
+        const options = { quality: 0.5, base64: true };
+        const photo = await cameraRef.current.takePictureAsync(options);
+        return photo;
+    };
+
+    const savePicture = async (photo) => {
+        await AsyncStorage.setItem("current-photo", photo.uri);
+        await MediaLibrary.saveToLibraryAsync(photo.uri);
+    };
+
+    const createMoment = () => {
+        const photo = takePicture();
+        savePicture(photo);
+        router.push("/components/MomentForm");
     };
 
     return (
@@ -33,9 +51,14 @@ export default function CameraTaker() {
                     <Text style={styles.text}>Abrechen</Text>
                 </Pressable>
             </View>
-            <Camera ratio="4:3" style={[styles.camera, { height: height }]} type={type}></Camera>
+            <Camera
+                ref={cameraRef}
+                ratio="4:3"
+                style={[styles.camera, { height: height }]}
+                type={type}
+            ></Camera>
             <View style={styles.footer}>
-                <Pressable style={styles.shotButton} onPress={shootPhoto}></Pressable>
+                <Pressable style={styles.shootButton} onPress={createMoment}></Pressable>
             </View>
         </View>
     );
@@ -77,7 +100,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
 
-    shotButton: {
+    shootButton: {
         backgroundColor: "white",
         height: 80,
         width: 80,
